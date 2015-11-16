@@ -13,14 +13,14 @@ class ServiceProvidersController < ApplicationController
   end
 
   def index
-    @states = State.joins(:service_providers).uniq!
+    @states = State.joins(:service_providers).uniq
     @state = State.find_by(name: params[:state])
 
     if params[:search]
 
       @providers = ServiceProvider.all_published.text_search(params[:search])
 
-      unless @providers.blank?
+      if @providers.present?
         @nearby_providers = @providers.get_nearbys
       end
 
