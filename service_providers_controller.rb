@@ -97,7 +97,7 @@ class ServiceProvidersController < ApplicationController
 
   def edit
     if @provider.city
-      @cities = City.where(state_id: @provider.state).all
+      @cities = City.where(state_id: @provider.state)
     end
   end
 
@@ -118,7 +118,7 @@ class ServiceProvidersController < ApplicationController
 
   def update_cities
     # @provider = ServiceProvider.find(params[:provider_id])
-    @new_cities = City.where(state_id: params[:state_id]).all
+    @new_cities = City.where(state_id: params[:state_id])
 
     render partial: 'service_providers/partials/cities', object: @new_cities
   end
@@ -147,11 +147,11 @@ class ServiceProvidersController < ApplicationController
   end
 
   def load_categories
-    @categories = Category.order(:name).all
+    @categories = Category.order(:name)
   end
 
   def load_subcategories
-    @subcategories = Subcategory.order(:name).all
+    @subcategories = Subcategory.order(:name)
   end
 
   def load_states
