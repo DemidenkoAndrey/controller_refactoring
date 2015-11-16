@@ -87,7 +87,7 @@ class ServiceProvidersController < ApplicationController
       @printable = Printable.new
     end
 
-    @subcategories = @provider.subcategories.order('category_id')
+    @subcategories = @provider.subcategories.order(:category_id)
 
     respond_to do |format|
       format.js
@@ -147,11 +147,11 @@ class ServiceProvidersController < ApplicationController
   end
 
   def load_categories
-    @categories = Category.order('name asc').all
+    @categories = Category.order(:name).all
   end
 
   def load_subcategories
-    @subcategories = Subcategory.order('name asc').all
+    @subcategories = Subcategory.order(:name).all
   end
 
   def load_states
@@ -159,7 +159,7 @@ class ServiceProvidersController < ApplicationController
   end
 
   def load_non_empty_cat
-    @categories = Category.with_published_providers.order('name asc').includes(:subcategories)
+    @categories = Category.with_published_providers.order(:name).includes(:subcategories)
   end
 
   def service_provider_params
