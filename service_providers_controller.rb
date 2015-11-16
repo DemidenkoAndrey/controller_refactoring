@@ -14,7 +14,6 @@ class ServiceProvidersController < ApplicationController
 
   def index
     @states = State.joins(:service_providers).uniq
-    @state = State.find_by(name: params[:state])
 
     if params[:search]
 
