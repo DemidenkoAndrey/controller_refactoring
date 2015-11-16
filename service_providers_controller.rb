@@ -4,9 +4,7 @@ class ServiceProvidersController < ApplicationController
 
   before_action :find_provider, only: [:show, :edit, :update, :destroy]
   before_action :load_non_empty_cat, only: [:index, :landing] # fetch only categories with published companies in them
-  before_action :load_categories, only: [:new, :edit]
-  before_action :load_subcategories, only: [:new, :edit]
-  before_action :load_states, only: [:new, :edit]
+  before_action :load_all, only: [:new, :edit]
 
   def landing
     @providers = ServiceProvider.landing_sample
@@ -228,6 +226,12 @@ class ServiceProvidersController < ApplicationController
                   {:category_ids => []}
           )
     end
+  end
+
+  def load_all
+    load_categories
+    load_subcategories
+    load_states
   end
 
 end
