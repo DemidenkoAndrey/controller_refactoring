@@ -27,7 +27,7 @@ class ServiceProvidersController < ApplicationController
       # if a User clicks on a category:
 
     elsif params[:category]
-      @category = @categories.find_by(id: params[:category])
+      @category = @categories.find(params[:category])
       @providers = ServiceProvider.fetch_by_cat(@category, @state)
       @show_title = @category.name
 
@@ -118,7 +118,7 @@ class ServiceProvidersController < ApplicationController
   end
 
   def update_cities
-    # @provider = ServiceProvider.find_by(id: params[:provider_id])
+    # @provider = ServiceProvider.find(params[:provider_id])
     @new_cities = City.where(state_id: params[:state_id]).all
 
     render partial: 'service_providers/partials/cities', object: @new_cities
@@ -138,7 +138,7 @@ class ServiceProvidersController < ApplicationController
 
   def send_to_list(user_id, provider)
     if user_id.present?
-      user = AppUser.find_by(id: user_id)
+      user = AppUser.find(user_id)
       ListItem.create!(list: user.list, service_provider: provider)
     end
   end
