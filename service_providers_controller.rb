@@ -180,7 +180,7 @@ class ServiceProvidersController < ApplicationController
                   {:subcategory_ids => []},
                   {:category_ids => []}
           )
-    serv_params.merge!(params.require(:service_provider).permit(:published) if current_app_user.admin
+    serv_params.merge!(params.require(:service_provider).permit(:published)) if current_app_user.admin
     serv_params
   end
 
