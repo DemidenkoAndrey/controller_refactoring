@@ -44,7 +44,7 @@ class ServiceProvidersController < ApplicationController
 
     else
 
-      @providers = ServiceProvider.all_published.includes(:city).includes(:state)
+      @providers = ServiceProvider.all_published.includes(:city, :state)
 
     end
 
