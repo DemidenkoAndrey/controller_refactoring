@@ -178,8 +178,8 @@ class ServiceProvidersController < ApplicationController
                   :state_id,
                   :city_id,
                   :bghex,
-                  {:subcategory_ids => []},
-                  {:category_ids => []}
+                  { :subcategory_ids => [] },
+                  { :category_ids => [] }
           )
     if current_app_user.admin
       serv_params.merge!(params.require(:service_provider).permit(:published))
