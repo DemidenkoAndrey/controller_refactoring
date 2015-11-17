@@ -8,7 +8,6 @@ class ServiceProvidersController < ApplicationController
 
   def landing
     @providers = ServiceProvider.landing_sample
-
     redirect_to service_providers_path if current_app_user
   end
 
@@ -16,9 +15,7 @@ class ServiceProvidersController < ApplicationController
     @states = State.joins(:service_providers).uniq
 
     if params[:search]
-
       @providers = ServiceProvider.all_published.text_search(params[:search])
-
       if @providers.present?
         @nearby_providers = @providers.get_nearbys
       end
@@ -33,19 +30,14 @@ class ServiceProvidersController < ApplicationController
       # if a User clicks on a subcategory:
 
     elsif params[:subcategory]
-
       @subcategory = Subcategory.find(params[:subcategory])
       @providers = ServiceProvider.fetch_by_subcat(@subcategory, @state)
       @show_title = @subcategory.name
-
     elsif params[:state]
       @state = State.find_by(name:params[:state])
       @providers = @state.service_providers.all_published
-
     else
-
       @providers = ServiceProvider.all_published.includes(:city, :state)
-
     end
 
     respond_to do |format|
@@ -58,7 +50,6 @@ class ServiceProvidersController < ApplicationController
     @all_user_providers = ServiceProvider.user_providers(current_app_user)
     @providers = @all_user_providers.where(published: true)
     @unpublished_user_providers = @all_user_providers.where(published: false)
-
     @link_share = LinkShare.new      # creates a link_share
     @sms_share = SmsShare.new        # ~~~
   end
@@ -102,9 +93,7 @@ class ServiceProvidersController < ApplicationController
   end
 
   def update
-
     if @provider.update(service_provider_params)
-
       send_to_list(params[:send_to_list], @provider)
       flash[:notice] = 'Service Provider updated successfully!'
       redirect_to service_provider_path(@provider)
@@ -119,7 +108,6 @@ class ServiceProvidersController < ApplicationController
   def update_cities
     # @provider = ServiceProvider.find(params[:provider_id])
     @new_cities = City.where(state_id: params[:state_id])
-
     render partial: 'service_providers/partials/cities', object: @new_cities
   end
 
@@ -201,5 +189,4 @@ class ServiceProvidersController < ApplicationController
     load_subcategories
     load_states
   end
-
 end
