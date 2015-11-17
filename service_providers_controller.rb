@@ -106,13 +106,14 @@ class ServiceProvidersController < ApplicationController
     if @provider.update(service_provider_params)
 
       send_to_list(params[:send_to_list], @provider)
-
-      redirect_to service_provider_path(@provider),
-                  notice: "Service Provider updated successfully!"
+      flash[:notice] = "Service Provider updated successfully!"
+      redirect_to service_provider_path(@provider)
     else
       @err = @provider.errors.full_messages
+      flash[:notice] = "Invalid. Service provider not updated."
+      flash[:errors] = @err
       redirect_to edit_service_provider_path(@provider),
-                  flash: { notice: "Invalid. Service provider not updated.", errors: @err}
+                  flash: { notice: , errors: }
     end
   end
 
