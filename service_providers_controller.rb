@@ -147,7 +147,8 @@ class ServiceProvidersController < ApplicationController
   end
 
   def load_non_empty_cat
-    @categories = Category.with_published_providers.order(:name).includes(:subcategories)
+    @categories = Category.with_published_providers.order(:name).
+                           includes(:subcategories)
   end
 
   def service_provider_params
@@ -180,7 +181,9 @@ class ServiceProvidersController < ApplicationController
                   {:subcategory_ids => []},
                   {:category_ids => []}
           )
-    serv_params.merge!(params.require(:service_provider).permit(:published)) if current_app_user.admin
+    if current_app_user.admin
+      serv_params.merge!(params.require(:service_provider).permit(:published))
+    end
     serv_params
   end
 
