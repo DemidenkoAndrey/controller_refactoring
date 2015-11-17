@@ -163,39 +163,7 @@ class ServiceProvidersController < ApplicationController
   end
 
   def service_provider_params
-    if current_app_user.admin
-      params.require(:service_provider).
-          permit( :name,
-                  :mission,
-                  :online_tool,
-                  :short_bio,
-                  :image,
-                  :street1,
-                  :street2,
-                  :city,
-                  :state,
-                  :zip_code,
-                  :website,
-                  :contact_person,
-                  :gender,
-                  :contact_email,
-                  :phone,
-                  :fax,
-                  :published,
-                  :cost,
-                  :orgtype,
-                  :facebook,
-                  :instagram,
-                  :twitter,
-                  :youtube,
-                  :state_id,
-                  :city_id,
-                  :bghex,
-                  {:category_ids => []},
-                  {:subcategory_ids => []}
-          )
-    else
-      params.require(:service_provider).
+    serv_params = params.require(:service_provider).
           permit( :name,
                   :mission,
                   :online_tool,
@@ -224,7 +192,8 @@ class ServiceProvidersController < ApplicationController
                   {:subcategory_ids => []},
                   {:category_ids => []}
           )
-    end
+    serv_params.merge!(params.require(:service_provider).permit(:published) if current_app_user.admin
+    serv_params
   end
 
   def load_all
